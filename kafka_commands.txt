@@ -1,0 +1,62 @@
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+.\bin\windows\kafka-console-consumer.bat  --bootstrap-server localhost:9092 --topic myTopic --from-beginning
+.\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic myTopic
+.\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
+.\bin\windows\kafka-topics.bat --create --topic TopicWebHook --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+.\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic TopicTelegram --property "parse.key=true" --property "key.separator=:"
+
+{"header": "6281698920", "body": "salam"}
+
+public void sendObjectToTopic(ProducerMessage myObject) {
+        try {
+            // Sérialisation de l'objet en JSON
+
+            String jsonString = objectMapper.writeValueAsString(myObject);
+            // Envoi du message sur le topic
+            kafkaTemplate.send("myTopic", jsonString);
+        } catch (Exception e) {
+            // Gérer les erreurs de sérialisation
+            e.printStackTrace();
+        }
+    }
+
+
+
+public void consumeMessage(String message) {
+        try {
+            // Désérialisation de l'objet JSON en instance de MyObject
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProducerMessage myObject = objectMapper.readValue(message, ProducerMessage.class);
+
+            // Utilisez l'objet désérialisé ici comme bon vous semble
+            System.out.println("Received message {   message: " + myObject.getBody() + ",   chatId: " + myObject.getHeader() + "    }");
+            simpleBot.sendMessage(myObject.getHeader(), myObject.getBody());
+
+            // Envoyez une confirmation à NATS que le message a été envoyé avec succès à Telegram
+            natsPublisher.publishMessage("messageConfirmation", "Message envoyé avec succès à Telegram");
+
+
+        } catch (Exception e) {
+            // Gérer les erreurs de désérialisation
+           // e.printStackTrace();
+            // Envoyez une confirmation d'erreur à NATS si le message n'a pas pu être envoyé à Telegram
+            natsPublisher.publishMessage("messageConfirmation", "Échec de l'envoi du message à Telegram");
+
+        }
+    }
+
+
+
+
+
+
+https://api.ultramsg.com/instance56360/messages/chat?token=wh24votbcjgqjgnn&to=+212706163014&body=messagewhatssap
+
+Detecteur de fumee active, possible incendie
+Niveau de pollution de l air dangereux detecte
+Fuite d eau detectee dans la salle de bains
+Temperature_elevee_detectee_dans_la_chambre_froide
+
+
