@@ -12,7 +12,7 @@ import java.io.IOException;
 @Component
 public class SendingMessage {
 
-    public String callAPIWhatsapp(String token, String destinataire, String body) throws IOException {
+    public boolean callAPIWhatsapp(String token, String destinataire, String body) throws IOException {
         String apiUrl = "https://api.ultramsg.com/instance56360/messages/chat";
         String urlWithParams = apiUrl + "?token=" + token + "&to=" + destinataire + "&body=" + body;
 
@@ -20,6 +20,10 @@ public class SendingMessage {
         HttpGet httpGet = new HttpGet(urlWithParams);
 
         HttpResponse httpResponse = httpClient.execute(httpGet);
-        return EntityUtils.toString(httpResponse.getEntity());
+        int statusCode = httpResponse.getStatusLine().getStatusCode();
+        if(statusCode<300 && statusCode>=200){
+            return true;
+        }
+        else return false;
     }
 }

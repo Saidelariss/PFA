@@ -1,6 +1,6 @@
 package webservices.email;
 
-import ethp.mostafa.serviceemailspringboot.entities.Message;
+
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import jakarta.mail.MessagingException;
@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import webservices.email.entities.Message;
 import webservices.nats.NatsPublisher;
 
 import java.io.File;
@@ -34,25 +35,17 @@ public class EmailServiceImpl implements EmailService {
 //    private NatsPublisher nats ;
 
     @Override
+
     public void sendSimpleMail(String recipient,String msg) throws Exception {
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
-            // set the infos of email
             mailMessage.setFrom(sender);
             mailMessage.setTo(recipient);
             mailMessage.setText(msg);
             mailMessage.setSubject("Alerte");
-           // mailMessage.setSubject(details.getSubject());
             // send the email
             javaMailSender.send(mailMessage);
-           // nats.sendNatsMessage("nats.notification.mail", "message send successfully");
-        /*}
-        catch (Exception e) {
-          //  nats.sendNatsMessage("nats.notification.mail", "message failed to send");
-            System.out.println(e.getMessage());
-        }
 
-         */
     }
 
     @Override

@@ -1,15 +1,16 @@
-package ehtp.mostafa.servicesmsvonage.service;
+package webservices.sms;
+
 
 import com.vonage.client.VonageClient;
 import com.vonage.client.sms.MessageStatus;
 import com.vonage.client.sms.SmsSubmissionResponse;
 import com.vonage.client.sms.messages.TextMessage;
-import ehtp.mostafa.servicesmsvonage.domain.MessageSMS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import webservices.nats.NatsPublisher;
 
 @Service
-public class VonageService {
+public class SmsVonage {
     @Autowired
     private VonageClient vonageClient ;
     @Autowired
@@ -17,9 +18,9 @@ public class VonageService {
 
     public boolean SendSMS(MessageSMS sms){
         TextMessage message = new TextMessage(
-                    sms.getFrom() ,
-                    sms.getTo(),
-                    sms.getMsgBody()
+                sms.getFrom() ,
+                sms.getTo(),
+                sms.getMsgBody()
         );
 
         SmsSubmissionResponse smsSubResp =
@@ -34,3 +35,4 @@ public class VonageService {
         }
     }
 }
+

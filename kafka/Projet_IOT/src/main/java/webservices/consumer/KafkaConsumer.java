@@ -45,7 +45,7 @@ public class KafkaConsumer {
 
     }
 
-        @KafkaListener(topics = "TopicTelegram", groupId = "my-consumer-group")
+    @KafkaListener(topics = "TopicTelegram", groupId = "my-consumer-group")
     public void consumeMessageFromTopicTelegram(ConsumerRecord<String, String> record) throws Exception{
         String key = record.key();
         String value = record.value();
@@ -68,16 +68,14 @@ public class KafkaConsumer {
         String value = record.value();
 
         MessageNats message = createMessage(key,value);
-        try {
-
-
-
-            System.out.println("Received message whatsapp {   message: " + value + ",   Numéro de Téléphone : " + key + "    }");
+        boolean b = sendingMessageWhatsapp.callAPIWhatsapp(token, key, value);
+        System.out.println("Received message whatsapp {   message: " + value + ",   Numéro de Téléphone : " + key + "    }");
+        if(b){
             sendingMessageWhatsapp.callAPIWhatsapp(token, key, value);
             sendSuccessConfirmation(message);
 
 
-        } catch (Exception e) {
+        } else  {
             sendErrorConfirmation(message);
         }
 

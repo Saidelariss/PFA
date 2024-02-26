@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class NatsConfig {
 
-    // Définissez l'URL du serveur NATS dans application.properties
+
     @Value("${nats.url}")
     private String natsUrl;
+
+
 
     @Bean
     public Connection natsConnection() throws Exception {

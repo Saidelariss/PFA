@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-
+@Component
 public class NatsPublisher {
     private final Connection natsConnection;
 
@@ -20,6 +20,11 @@ public class NatsPublisher {
     public void publishMessage(String subject, String message) {
         natsConnection.publish(subject, message.getBytes());
     }
+
+    public void sendNatsMessage(String subject , String message )  {
+        natsConnection.publish(subject , message.getBytes());
+    }
+
 
     public void closeConnection() throws InterruptedException {
         natsConnection.close();

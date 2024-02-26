@@ -38,11 +38,9 @@ public class SlackService {
         HttpEntity<Map<String , String >> request = new HttpEntity<>(messageBuilder , headers);
         ResponseEntity response = restTemplate.postForEntity(url , request , String.class );
         if (response.getStatusCode().is2xxSuccessful()){
-//            nats.sendNatsMessage("nats.notification.webhook", "message send successfully !!");
             return true;
         }
         else {
-//            nats.sendNatsMessage("nats.notification.webhook", "message failed to send !!");
             return false;
         }
     }

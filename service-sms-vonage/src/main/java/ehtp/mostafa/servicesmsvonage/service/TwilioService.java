@@ -18,7 +18,7 @@ public class TwilioService {
         this.twilioConfig = twilioConfig;
     }
 
-    void sendSms(MessageSMS message){
+   public void sendSms(MessageSMS message){
         PhoneNumber from = new PhoneNumber(
                 twilioConfig.getTrialNumber()
         );

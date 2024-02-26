@@ -1,6 +1,8 @@
 package webservices.email;
 
-import ethp.mostafa.serviceemailspringboot.entities.Message;
+
+
+import webservices.email.entities.Message;
 
 public interface EmailService {
     // To send a simple email

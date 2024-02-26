@@ -1,4 +1,4 @@
-package webservices.config;
+package webservices.configKafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +15,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
-@Slf4j
-@RequiredArgsConstructor
+
 public class KafkaProducerConfig {
 
     @Value(value = "${kafka.bootstrapAddress}")

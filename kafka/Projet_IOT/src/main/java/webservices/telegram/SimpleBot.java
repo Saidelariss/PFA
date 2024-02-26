@@ -16,7 +16,6 @@ public class SimpleBot extends TelegramLongPollingBot {
     public void sendMessage(String chatId, String message){
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
-       // System.out.println(update.getMessage().getChatId().toString());
         sendMessage.setText(message);
         try {
             execute(sendMessage);
@@ -24,8 +23,20 @@ public class SimpleBot extends TelegramLongPollingBot {
             throw new RuntimeException(e);
         }
 
-
     }
+
+    @Override
+    public String getBotUsername() {
+        return "said01_bot";
+    }
+
+    @Override
+    public String getBotToken() {
+        return "6333101237:AAF_1EYEXn5IFzsd3JIKakALXcckDkJKiRw";
+    }
+
+
+
     @Override
     public void onUpdateReceived(Update update) {
         System.out.println(update.getMessage().getText());
@@ -39,18 +50,6 @@ public class SimpleBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public String getBotUsername() {
-
-        return "said01_bot";
-    }
-
-    @Override
-    public String getBotToken() {
-
-        return "6333101237:AAF_1EYEXn5IFzsd3JIKakALXcckDkJKiRw";
     }
 }
 

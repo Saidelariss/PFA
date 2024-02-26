@@ -1,4 +1,4 @@
-package webservices.config;
+package webservices.configKafka;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
